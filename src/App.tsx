@@ -6,6 +6,7 @@ import './App.css'
    ============================================ */
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -14,10 +15,10 @@ function Navbar() {
   }, [])
 
   return (
-    <nav id="navbar" className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+    <nav id="navbar" className={`navbar ${scrolled || mobileMenuOpen ? 'scrolled' : ''}`}>
       <div className="container">
         <div className="navbar-inner">
-          <a href="#" className="navbar-logo" aria-label="AcidMoney Home">
+          <a href="#" className="navbar-logo" aria-label="AcidMoney Home" onClick={() => setMobileMenuOpen(false)}>
             <img src="/logo.png" alt="AcidMoney Logo" />
             <span className="navbar-logo-text">Acid<span>Money</span></span>
           </a>
@@ -32,11 +33,28 @@ function Navbar() {
             <button className="btn-primary-nav" id="nav-download-btn">Get App Free</button>
           </div>
 
-          <button className="navbar-mobile-toggle" aria-label="Toggle menu" id="mobile-menu-btn">
+          <button 
+            className={`navbar-mobile-toggle ${mobileMenuOpen ? 'open' : ''}`} 
+            aria-label="Toggle menu" 
+            id="mobile-menu-btn"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
             <span></span>
             <span></span>
             <span></span>
           </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`navbar-mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+        <ul className="navbar-mobile-links">
+          <li><a href="#features" onClick={() => setMobileMenuOpen(false)}>Features</a></li>
+          <li><a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How It Works</a></li>
+          <li><a href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Reviews</a></li>
+        </ul>
+        <div className="navbar-mobile-cta">
+          <button className="btn-primary-nav" style={{ width: '100%' }} onClick={() => setMobileMenuOpen(false)}>Get App Free</button>
         </div>
       </div>
     </nav>
@@ -214,14 +232,14 @@ function PhoneMockup() {
   ]
 
   const categories = [
-    { title: 'Groceries', icon: <BasketIcon />, color: '#FCD836', primary: '$0', secondary: '$0' },
-    { title: 'Home', icon: <HomeIcon />, color: '#00A9F8', primary: '$0', secondary: '$0' },
-    { title: 'Cafe', icon: <CupIcon />, color: '#EF3070', primary: '$0', secondary: '$0' },
-    { title: 'Transport', icon: <GasStationIcon />, color: '#FFA931', primary: '$0', secondary: '$0' },
-    { title: 'Health', icon: <HeartIcon />, color: '#049688', primary: '$0', secondary: '$0' },
-    { title: 'Leisure', icon: <DrinkIcon />, color: '#B43CC7', primary: '$0', secondary: '$0' },
-    { title: 'Household', icon: <HouseholdIcon />, color: '#87C25B', primary: '$0', secondary: '$0' },
-    { title: 'Sports', icon: <WeightIcon />, color: '#495BCD', primary: '$0', secondary: '$0' },
+    { title: 'Groceries', icon: <BasketIcon />, color: '#FCD836', primary: '$240', secondary: '$110' },
+    { title: 'Home', icon: <HomeIcon />, color: '#00A9F8', primary: '$150', secondary: '$150' },
+    { title: 'Cafe', icon: <CupIcon />, color: '#EF3070', primary: '$85', secondary: '$35' },
+    { title: 'Transport', icon: <GasStationIcon />, color: '#FFA931', primary: '$45', secondary: '$15' },
+    { title: 'Health', icon: <HeartIcon />, color: '#049688', primary: '$30', secondary: '$20' },
+    { title: 'Leisure', icon: <DrinkIcon />, color: '#B43CC7', primary: '$110', secondary: '$40' },
+    { title: 'Household', icon: <HouseholdIcon />, color: '#87C25B', primary: '$95', secondary: '$55' },
+    { title: 'Sports', icon: <WeightIcon />, color: '#495BCD', primary: '$60', secondary: '$20' },
   ]
 
   return (
@@ -273,7 +291,7 @@ function PhoneMockup() {
 
           {/* Balance Amount */}
           <div className="phone-balance-value">
-            {balanceHidden ? "$ •••••" : "$ 5 000"}
+            {balanceHidden ? "$ •••••" : "$ 7 800"}
           </div>
 
           {/* Accounts Section */}
@@ -567,17 +585,73 @@ function HowItWorks() {
 /* ============================================
    DASHBOARD PREVIEW SECTION
    ============================================ */
-function DashboardPreview() {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-  const incomeData = [65, 75, 55, 80, 70, 90]
-  const expenseData = [40, 55, 45, 60, 50, 65]
+type Period = '7d' | '30d' | '6m' | '1y';
 
-  const cats = [
-    { name: 'Housing', color: '#36B4FF', pct: '78%', amount: '₴3,200' },
-    { name: 'Food', color: '#FFA130', pct: '55%', amount: '₴1,240' },
-    { name: 'Shopping', color: '#C6FF4C', pct: '40%', amount: '₴890' },
-    { name: 'Health', color: '#FF1C45', pct: '25%', amount: '₴560' },
-  ]
+const periodDataMap: Record<Period, {
+  label: string;
+  totalAmount: string;
+  labels: string[];
+  incomeData: number[];
+  expenseData: number[];
+  categories: { name: string; color: string; pct: string; amount: string }[];
+}> = {
+  '7d': {
+    label: 'Net Balance (7 days)',
+    totalAmount: '1,420',
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    incomeData: [85, 60, 95, 70, 80, 50, 90],
+    expenseData: [40, 45, 50, 35, 60, 30, 45],
+    categories: [
+      { name: 'Housing', color: '#36B4FF', pct: '85%', amount: '₴180' },
+      { name: 'Food', color: '#FFA130', pct: '60%', amount: '₴125' },
+      { name: 'Shopping', color: '#C6FF4C', pct: '35%', amount: '₴80' },
+      { name: 'Health', color: '#FF1C45', pct: '20%', amount: '₴45' },
+    ],
+  },
+  '30d': {
+    label: 'Net Balance (30 days)',
+    totalAmount: '5,680',
+    labels: ['W1', 'W2', 'W3', 'W4', 'W5'],
+    incomeData: [70, 85, 65, 90, 75],
+    expenseData: [45, 55, 50, 60, 40],
+    categories: [
+      { name: 'Housing', color: '#36B4FF', pct: '75%', amount: '₴720' },
+      { name: 'Food', color: '#FFA130', pct: '50%', amount: '₴480' },
+      { name: 'Shopping', color: '#C6FF4C', pct: '45%', amount: '₴390' },
+      { name: 'Health', color: '#FF1C45', pct: '20%', amount: '₴180' },
+    ],
+  },
+  '6m': {
+    label: 'Net Balance (6 months)',
+    totalAmount: '24,890',
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    incomeData: [65, 75, 55, 80, 70, 90],
+    expenseData: [40, 55, 45, 60, 50, 65],
+    categories: [
+      { name: 'Housing', color: '#36B4FF', pct: '78%', amount: '₴3,200' },
+      { name: 'Food', color: '#FFA130', pct: '55%', amount: '₴1,240' },
+      { name: 'Shopping', color: '#C6FF4C', pct: '40%', amount: '₴890' },
+      { name: 'Health', color: '#FF1C45', pct: '25%', amount: '₴560' },
+    ],
+  },
+  '1y': {
+    label: 'Net Balance (1 year)',
+    totalAmount: '48,150',
+    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+    incomeData: [75, 80, 70, 90],
+    expenseData: [50, 60, 55, 65],
+    categories: [
+      { name: 'Housing', color: '#36B4FF', pct: '80%', amount: '₴6,800' },
+      { name: 'Food', color: '#FFA130', pct: '65%', amount: '₴3,100' },
+      { name: 'Shopping', color: '#C6FF4C', pct: '40%', amount: '₴1,950' },
+      { name: 'Health', color: '#FF1C45', pct: '30%', amount: '₴1,200' },
+    ],
+  },
+};
+
+function DashboardPreview() {
+  const [selectedPeriod, setSelectedPeriod] = useState<Period>('6m')
+  const currentData = periodDataMap[selectedPeriod]
 
   return (
     <section id="preview" className="section">
@@ -594,39 +668,45 @@ function DashboardPreview() {
           <div className="dashboard-header">
             <div className="dashboard-title">Financial Overview</div>
             <div className="dashboard-period">
-              {['7d', '30d', '6m', '1y'].map((p, i) => (
-                <div key={i} className={`period-chip ${i === 2 ? 'active' : ''}`}>{p}</div>
+              {(['7d', '30d', '6m', '1y'] as Period[]).map((p) => (
+                <button
+                  key={p}
+                  className={`period-chip ${selectedPeriod === p ? 'active' : ''}`}
+                  onClick={() => setSelectedPeriod(p)}
+                >
+                  {p}
+                </button>
               ))}
             </div>
           </div>
 
           <div className="dashboard-total">
-            <div className="dashboard-total-label">Net Balance (6 months)</div>
+            <div className="dashboard-total-label">{currentData.label}</div>
             <div className="dashboard-total-amount">
-              <span className="currency">₴</span>24,890
+              <span className="currency">₴</span>{currentData.totalAmount}
             </div>
           </div>
 
           {/* Bar Chart */}
           <div className="chart-bars">
-            {months.map((month, i) => (
+            {currentData.labels.map((label, i) => (
               <div key={i} className="chart-bar-group">
                 <div
                   className="chart-bar income"
-                  style={{ height: `${incomeData[i]}%` }}
+                  style={{ height: `${currentData.incomeData[i]}%` }}
                 />
                 <div
                   className="chart-bar expense"
-                  style={{ height: `${expenseData[i]}%` }}
+                  style={{ height: `${currentData.expenseData[i]}%` }}
                 />
-                <div className="chart-bar-label">{month}</div>
+                <div className="chart-bar-label">{label}</div>
               </div>
             ))}
           </div>
 
           {/* Category breakdown */}
           <div className="category-breakdown">
-            {cats.map((cat, i) => (
+            {currentData.categories.map((cat, i) => (
               <div key={i} className="category-row">
                 <div className="category-color-dot" style={{ background: cat.color }} />
                 <div className="category-name">{cat.name}</div>
@@ -722,11 +802,17 @@ function CTA() {
             Join 50,000+ users who've transformed their finances. Get started in 30 seconds — completely free.
           </p>
           <div className="cta-actions">
-            <button className="btn-primary" id="cta-ios-btn" style={{ fontSize: 16, padding: '16px 32px' }}>
-              🍎 Download for iOS
+            <button className="btn-primary" id="cta-ios-btn" style={{ fontSize: 16, padding: '16px 32px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <svg viewBox="0 0 24 24" style={{ width: 20, height: 20, fill: 'currentColor' }}>
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+              Download for iOS
             </button>
-            <button className="btn-primary" id="cta-android-btn" style={{ fontSize: 16, padding: '16px 32px', background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}>
-              🤖 Download for Android
+            <button className="btn-primary" id="cta-android-btn" style={{ fontSize: 16, padding: '16px 32px', background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <svg viewBox="0 0 24 24" style={{ width: 20, height: 20, fill: 'currentColor' }}>
+                <path d="M16.6 14c-.52 0-.94-.42-.94-.94 0-.52.42-.94.94-.94.52 0 .94.42.94.94 0 .52-.42.94-.94.94zm-9.2 0c-.52 0-.94-.42-.94-.94 0-.52.42-.94.94-.94.52 0 .94.42.94.94 0 .52-.42.94-.94.94zm9.7-4.22l1.27-2.2a.48.48 0 00-.18-.66.48.48 0 00-.65.18l-1.29 2.24a10.37 10.37 0 00-8.58 0L6.68 7.1a.48.48 0 00-.65-.18.48.48 0 00-.18.66l1.27 2.2C4.3 11.2 2.22 13.9 2 17.15h20c-.22-3.25-2.3-5.95-5.12-7.37z" />
+              </svg>
+              Download for Android
             </button>
           </div>
         </div>

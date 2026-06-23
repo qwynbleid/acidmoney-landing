@@ -147,6 +147,10 @@
   transition: all var(--transition-base);
 }
 
+.navbar-mobile-menu {
+  display: none;
+}
+
 /* ============================================
    HERO SECTION
    ============================================ */
@@ -410,6 +414,7 @@
   border: 2px solid rgba(255,255,255,0.12);
   overflow: hidden;
   position: relative;
+  z-index: 1; /* explicit low stacking context */
   box-shadow:
     0 0 0 1px rgba(0,0,0,0.5),
     0 32px 80px rgba(0,0,0,0.6),
@@ -432,13 +437,13 @@
   width: 100%;
   height: 100%;
   background: var(--color-bg-alt);
-  padding: 50px 14px 60px; /* 50px top for notch, 14px sides, 60px bottom navbar spacing */
-  overflow-y: auto;
+  padding: 46px 12px 54px; /* adapt to notch and bottom navbar bounds */
+  overflow: hidden; /* screen is not scrollable, shows home screen */
   overflow-x: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
@@ -513,10 +518,10 @@
 .phone-section-container {
   background: var(--color-surface);
   border-radius: 12px;
-  padding: 12px 10px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .phone-section-header {
@@ -545,9 +550,9 @@
 }
 
 .phone-app-card {
-  height: 68px;
+  height: 60px;
   width: 100%;
-  padding: 6px 4px 8px;
+  padding: 4px 4px 6px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -584,7 +589,7 @@
   font-weight: 700;
   color: var(--color-text);
   text-align: center;
-  margin-top: 6px;
+  margin-top: 3px;
   white-space: nowrap;
 }
 
@@ -703,7 +708,7 @@
   gap: 8px;
   box-shadow: var(--shadow-card);
   white-space: nowrap;
-  z-index: 5;
+  z-index: 20; /* ensures badges stay on top of phone layers */
 }
 
 .phone-float-badge.badge-1 {
@@ -918,7 +923,7 @@
 .steps-grid::before {
   content: '';
   position: absolute;
-  top: 32px;
+  top: 56px;
   left: calc(12.5% + 24px);
   right: calc(12.5% + 24px);
   height: 1px;
@@ -1020,6 +1025,11 @@
   color: var(--color-text-muted);
   cursor: pointer;
   transition: all var(--transition-fast);
+}
+
+.period-chip:hover:not(.active) {
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .period-chip.active {
@@ -1271,14 +1281,14 @@
 .footer {
   background: var(--color-bg);
   border-top: 1px solid var(--color-border);
-  padding: var(--space-3xl) 0 var(--space-xl);
+  padding: var(--space-xl) 0 var(--space-lg);
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: var(--space-3xl);
-  margin-bottom: var(--space-3xl);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
 }
 
 .footer-brand {
@@ -1472,7 +1482,68 @@
     text-align: center;
   }
   .phone-float-badge {
-    display: none;
+    display: flex;
+  }
+  .phone-float-badge.badge-1 {
+    left: -40px;
+    top: 50px;
+  }
+  .phone-float-badge.badge-2 {
+    right: -40px;
+    bottom: 80px;
+  }
+  .phone-float-badge.badge-3 {
+    right: -30px;
+    top: 45%;
+  }
+  .navbar-mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 10, 0.96);
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: var(--space-xl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-base);
+    z-index: 999;
+  }
+  .navbar-mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .navbar-mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .navbar-mobile-links a {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    display: block;
+    padding: 8px 0;
+    transition: color var(--transition-fast);
+  }
+  .navbar-mobile-links a:hover {
+    color: var(--color-text);
+  }
+  .navbar-mobile-toggle.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .navbar-mobile-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar-mobile-toggle.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
   .cta-actions {
     flex-direction: column;
@@ -1493,5 +1564,14 @@
   .hero-visual {
     transform: scale(0.75);
     transform-origin: center top;
+  }
+  .phone-float-badge.badge-1 {
+    left: -30px;
+  }
+  .phone-float-badge.badge-2 {
+    right: -30px;
+  }
+  .phone-float-badge.badge-3 {
+    right: -20px;
   }
 }
