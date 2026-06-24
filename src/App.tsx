@@ -27,6 +27,7 @@ function Navbar() {
             <li><a href="#features">Features</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="#testimonials">Reviews</a></li>
+            <li><a href="#faq">FAQ</a></li>
           </ul>
 
           <div className="navbar-cta">
@@ -52,6 +53,7 @@ function Navbar() {
           <li><a href="#features" onClick={() => setMobileMenuOpen(false)}>Features</a></li>
           <li><a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How It Works</a></li>
           <li><a href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Reviews</a></li>
+          <li><a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a></li>
         </ul>
         <div className="navbar-mobile-cta">
           <button className="btn-primary-nav" style={{ width: '100%' }} onClick={() => setMobileMenuOpen(false)}>Get App Free</button>
@@ -297,7 +299,7 @@ function PhoneMockup() {
           {/* Accounts Section */}
           <div className="phone-section-container">
             <div className="phone-section-header">
-              <span className="phone-section-title">Accounts</span>
+              <span className="phone-section-title">Wallets</span>
             </div>
             <div className="phone-card-grid">
               {accounts.map((acc, i) => (
@@ -391,12 +393,11 @@ function Hero() {
             </div>
 
             <h1 className="hero-title">
-              Your Money,{' '}
-              <span className="gradient-text">Under Control</span>
+              Smarter Budgeting <span className="gradient-text">Starts Here</span>
             </h1>
 
             <p className="hero-subtitle">
-              AcidMoney is a smart personal finance app that helps you track expenses, manage accounts, and build better money habits — all in one beautiful interface.
+              Track income, control expenses, and achieve your financial goals with confidence with AcidMoney.
             </p>
 
 
@@ -433,37 +434,7 @@ function Hero() {
   )
 }
 
-/* ============================================
-   STATS TICKER
-   ============================================ */
-function StatsTicker() {
-  const items = [
-    { value: '50,000+', label: 'Active Users' },
-    { value: '₴2B+', label: 'Transactions Tracked' },
-    { value: '4.8★', label: 'App Store Rating' },
-    { value: '10+', label: 'Currency Support' },
-    { value: '99.9%', label: 'Uptime Reliability' },
-    { value: '< 2s', label: 'Average Load Time' },
-    { value: 'Free', label: 'Core Features' },
-    { value: '24/7', label: 'Cloud Sync' },
-  ]
 
-  const doubled = [...items, ...items]
-
-  return (
-    <div className="stats-ticker" aria-label="App statistics">
-      <div className="stats-ticker-track">
-        {doubled.map((item, i) => (
-          <div key={i} className="stats-ticker-item">
-            <span className="stats-ticker-value">{item.value}</span>
-            <span className="stats-ticker-label">{item.label}</span>
-            <div className="stats-ticker-dot" />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 /* ============================================
    FEATURES SECTION
@@ -471,32 +442,56 @@ function StatsTicker() {
 function Features() {
   const features = [
     {
-      icon: '💳',
-      title: 'Smart Accounts',
-      desc: 'Manage multiple accounts — cash, cards, savings — all in one place with real-time balance tracking and beautiful card visuals.',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 5H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h15c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-3.5 8c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+        </svg>
+      ),
+      title: 'Custom Wallets',
+      desc: 'Manage cash, savings, or custom balances manually in one place. No bank connections required for total privacy.',
     },
     {
-      icon: '📊',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M4 11h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1zm10 0h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1zM4 21h6c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1zm10 0h6c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1z"/>
+        </svg>
+      ),
       title: 'Category Tracking',
       desc: 'Create custom expense categories with icons and colors. Know exactly where your money goes with detailed breakdowns.',
     },
     {
-      icon: '🔄',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2H3v20z"/>
+        </svg>
+      ),
       title: 'Transaction History',
       desc: 'Browse all transactions with powerful search and period filters: 7 days, 30 days, 6 months, or 1 year.',
     },
     {
-      icon: '📈',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2v-4h2v4zm4 0h-2v-10h2v10z"/>
+        </svg>
+      ),
       title: 'Analytics Dashboard',
       desc: 'Visualize income vs expenses with clear charts. Spot trends and make smarter decisions with your finances.',
     },
     {
-      icon: '🌍',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.88 15.14L12 18.5V17c-2.31-.15-3.5-1.39-3.5-3.5h2c0 .96.47 1.53 1.5 1.5V12.7c-2.33-.59-3.5-1.28-3.5-3.2 0-1.72 1.05-2.87 3.5-3V5.5l1.88 1.36L12 8V6.5c2.31.15 3.5 1.39 3.5 3.5h-2c0-.96-.47-1.53-1.5-1.5v2.3c2.33.59 3.5 1.28 3.5 3.2.01 1.72-1.04 2.87-3.49 3.14z"/>
+        </svg>
+      ),
       title: 'Multi-Currency',
       desc: 'Track spending in 10+ currencies. Automatic conversion keeps your global finances in check effortlessly.',
     },
     {
-      icon: '☁️',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+        </svg>
+      ),
       title: 'Cloud Sync',
       desc: 'Your data syncs instantly across all devices. Google and Apple sign-in for seamless, secure access anywhere.',
     },
@@ -509,7 +504,7 @@ function Features() {
           <span className="section-eyebrow">Features</span>
           <h2 className="section-title">Everything you need to master your finances</h2>
           <p className="section-description">
-            Powerful tools designed to make personal finance feel effortless, insightful, and even enjoyable.
+            Smart tools designed to make personal finance simple, insightful, and stress-free.
           </p>
         </div>
 
@@ -542,8 +537,8 @@ function HowItWorks() {
     },
     {
       num: '02',
-      title: 'Add Your Accounts',
-      desc: 'Connect your cash, cards, and savings. Customize with colors and icons.',
+      title: 'Set Up Your Wallets',
+      desc: 'Create manual wallets for cash, savings, or specific goals. Customize with colors and icons.',
     },
     {
       num: '03',
@@ -583,140 +578,70 @@ function HowItWorks() {
 }
 
 /* ============================================
-   DASHBOARD PREVIEW SECTION
+   FAQ SECTION
    ============================================ */
-type Period = '7d' | '30d' | '6m' | '1y';
+function FAQ() {
+  const faqs = [
+    {
+      q: 'Do I need to connect my bank accounts to AcidMoney?',
+      a: 'No. AcidMoney is built on manual entry to prioritize your privacy and data security. You don’t have to share bank credentials or link sensitive credit cards.'
+    },
+    {
+      q: 'Is AcidMoney completely free to use?',
+      a: 'Yes, the core budgeting features, custom wallets, category tracking, and period filtering are entirely free.'
+    },
+    {
+      q: 'How is my financial data secured?',
+      a: 'We store your data securely. If you choose to sync across devices using Google or Apple sign-in, your databases are securely synced using encryption protocols.'
+    },
+    {
+      q: 'Does it support multiple currencies?',
+      a: 'Absolutely. You can track spending and manage custom wallets in 10+ currencies. The app automatically calculates conversions so you can manage your balance seamlessly.'
+    }
+  ]
 
-const periodDataMap: Record<Period, {
-  label: string;
-  totalAmount: string;
-  labels: string[];
-  incomeData: number[];
-  expenseData: number[];
-  categories: { name: string; color: string; pct: string; amount: string }[];
-}> = {
-  '7d': {
-    label: 'Net Balance (7 days)',
-    totalAmount: '1,420',
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    incomeData: [85, 60, 95, 70, 80, 50, 90],
-    expenseData: [40, 45, 50, 35, 60, 30, 45],
-    categories: [
-      { name: 'Housing', color: '#36B4FF', pct: '85%', amount: '₴180' },
-      { name: 'Food', color: '#FFA130', pct: '60%', amount: '₴125' },
-      { name: 'Shopping', color: '#C6FF4C', pct: '35%', amount: '₴80' },
-      { name: 'Health', color: '#FF1C45', pct: '20%', amount: '₴45' },
-    ],
-  },
-  '30d': {
-    label: 'Net Balance (30 days)',
-    totalAmount: '5,680',
-    labels: ['W1', 'W2', 'W3', 'W4', 'W5'],
-    incomeData: [70, 85, 65, 90, 75],
-    expenseData: [45, 55, 50, 60, 40],
-    categories: [
-      { name: 'Housing', color: '#36B4FF', pct: '75%', amount: '₴720' },
-      { name: 'Food', color: '#FFA130', pct: '50%', amount: '₴480' },
-      { name: 'Shopping', color: '#C6FF4C', pct: '45%', amount: '₴390' },
-      { name: 'Health', color: '#FF1C45', pct: '20%', amount: '₴180' },
-    ],
-  },
-  '6m': {
-    label: 'Net Balance (6 months)',
-    totalAmount: '24,890',
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    incomeData: [65, 75, 55, 80, 70, 90],
-    expenseData: [40, 55, 45, 60, 50, 65],
-    categories: [
-      { name: 'Housing', color: '#36B4FF', pct: '78%', amount: '₴3,200' },
-      { name: 'Food', color: '#FFA130', pct: '55%', amount: '₴1,240' },
-      { name: 'Shopping', color: '#C6FF4C', pct: '40%', amount: '₴890' },
-      { name: 'Health', color: '#FF1C45', pct: '25%', amount: '₴560' },
-    ],
-  },
-  '1y': {
-    label: 'Net Balance (1 year)',
-    totalAmount: '48,150',
-    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-    incomeData: [75, 80, 70, 90],
-    expenseData: [50, 60, 55, 65],
-    categories: [
-      { name: 'Housing', color: '#36B4FF', pct: '80%', amount: '₴6,800' },
-      { name: 'Food', color: '#FFA130', pct: '65%', amount: '₴3,100' },
-      { name: 'Shopping', color: '#C6FF4C', pct: '40%', amount: '₴1,950' },
-      { name: 'Health', color: '#FF1C45', pct: '30%', amount: '₴1,200' },
-    ],
-  },
-};
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-function DashboardPreview() {
-  const [selectedPeriod, setSelectedPeriod] = useState<Period>('6m')
-  const currentData = periodDataMap[selectedPeriod]
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index)
+  }
 
   return (
-    <section id="preview" className="section">
+    <section id="faq" className="section faq-section">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">Dashboard</span>
-          <h2 className="section-title">Your finances at a glance</h2>
+          <span className="section-eyebrow">FAQ</span>
+          <h2 className="section-title">Frequently Asked Questions</h2>
           <p className="section-description">
-            A clean, intuitive dashboard gives you a full picture of your financial health — income, expenses, and category breakdowns in one view.
+            Everything you need to know about AcidMoney's safety, features, and pricing.
           </p>
         </div>
 
-        <div className="dashboard-visual reveal">
-          <div className="dashboard-header">
-            <div className="dashboard-title">Financial Overview</div>
-            <div className="dashboard-period">
-              {(['7d', '30d', '6m', '1y'] as Period[]).map((p) => (
+        <div className="faq-list reveal">
+          {faqs.map((faq, i) => {
+            const isOpen = openIndex === i
+            return (
+              <div key={i} className={`faq-item ${isOpen ? 'open' : ''}`}>
                 <button
-                  key={p}
-                  className={`period-chip ${selectedPeriod === p ? 'active' : ''}`}
-                  onClick={() => setSelectedPeriod(p)}
+                  className="faq-question-btn"
+                  onClick={() => toggleFAQ(i)}
+                  aria-expanded={isOpen}
+                  id={`faq-btn-${i}`}
                 >
-                  {p}
+                  <span className="faq-question">{faq.q}</span>
+                  <span className="faq-icon" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" className="vertical-line" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
                 </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="dashboard-total">
-            <div className="dashboard-total-label">{currentData.label}</div>
-            <div className="dashboard-total-amount">
-              <span className="currency">₴</span>{currentData.totalAmount}
-            </div>
-          </div>
-
-          {/* Bar Chart */}
-          <div className="chart-bars">
-            {currentData.labels.map((label, i) => (
-              <div key={i} className="chart-bar-group">
-                <div
-                  className="chart-bar income"
-                  style={{ height: `${currentData.incomeData[i]}%` }}
-                />
-                <div
-                  className="chart-bar expense"
-                  style={{ height: `${currentData.expenseData[i]}%` }}
-                />
-                <div className="chart-bar-label">{label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Category breakdown */}
-          <div className="category-breakdown">
-            {currentData.categories.map((cat, i) => (
-              <div key={i} className="category-row">
-                <div className="category-color-dot" style={{ background: cat.color }} />
-                <div className="category-name">{cat.name}</div>
-                <div className="category-bar-track">
-                  <div className="category-bar-fill" style={{ width: cat.pct, background: cat.color }} />
+                <div className="faq-answer-container">
+                  <div className="faq-answer">{faq.a}</div>
                 </div>
-                <div className="category-amount">{cat.amount}</div>
               </div>
-            ))}
-          </div>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -897,11 +822,10 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <StatsTicker />
         <Features />
         <HowItWorks />
-        <DashboardPreview />
         <Testimonials />
+        <FAQ />
         <CTA />
       </main>
       <Footer />
